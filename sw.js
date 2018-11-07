@@ -96,7 +96,9 @@ function networkFirstStrategy(request) {
 function fetchRequestAndCache(request) {
     return fetch(request).then(function (networkResponse) {
         caches.open(getCacheName(request)).then(function (cache) {
-            cache.put(request, networkResponse);
+            if(request.url.startsWith('http')){
+                cache.put(request, networkResponse);
+            }
         })
         return networkResponse.clone();
     });
